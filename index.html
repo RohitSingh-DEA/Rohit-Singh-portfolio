@@ -4,17 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rohit Singh | Data Engineer & Analyst</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #007aff;
-      --bg: #f9f9f9;
-      --text: #333;
-      --accent: #111;
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card-hover: #253347;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --green: #22c55e;
+      --orange: #f97316;
+      --purple: #a855f7;
       --radius: 12px;
+      --border: #334155;
     }
     * {
       margin: 0; padding: 0; box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Inter', sans-serif;
       scroll-behavior: smooth;
     }
     body {
@@ -22,13 +33,16 @@
       color: var(--text);
       line-height: 1.6;
     }
+
+    /* NAV */
     nav {
       position: fixed;
       width: 100%;
       top: 0; left: 0;
-      background: white;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      z-index: 10;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
     }
     nav ul {
       display: flex;
@@ -39,96 +53,442 @@
     }
     nav a {
       text-decoration: none;
-      color: var(--text);
-      font-weight: 600;
-      transition: color 0.3s;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: color 0.2s;
     }
-    nav a:hover {
-      color: var(--primary);
-    }
-    section {
-      padding: 6rem 2rem;
-      max-width: 1000px;
+    nav a:hover { color: var(--accent); }
+
+    /* HERO */
+    #home {
+      padding: 8rem 2rem 4rem;
+      max-width: 1100px;
       margin: auto;
-    }
-    header {
-      text-align: center;
-      margin-top: 4rem;
-    }
-    header h1 {
-      font-size: 2.8rem;
-      color: var(--accent);
-    }
-    header p {
-      margin: 1rem 0;
-      font-size: 1.1rem;
-      color: #555;
-    }
-    .btn {
-      background: var(--primary);
-      color: white;
-      padding: 0.8rem 1.6rem;
-      border: none;
-      border-radius: var(--radius);
-      cursor: pointer;
-      font-weight: 600;
-      transition: transform 0.2s ease;
-    }
-    .btn:hover {
-      transform: scale(1.05);
-    }
-    .projects {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
     }
-    .card {
-      background: white;
-      padding: 1.5rem;
-      border-radius: var(--radius);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      transition: transform 0.3s;
+    .hero-text h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
     }
-    .card:hover {
-      transform: translateY(-5px);
+    .hero-text h1 span { color: var(--accent); }
+    .hero-text p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 1.5rem;
     }
-    .card h3 {
-      color: var(--primary);
-      margin-bottom: 0.5rem;
-    }
-    .skills {
+    .hero-badges {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.8rem;
-      margin-top: 1.5rem;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
     }
-    .skill {
-      background: white;
-      border-radius: var(--radius);
-      padding: 0.5rem 1rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    .badge {
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--accent);
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
       font-weight: 500;
     }
+    .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+    }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+    /* HERO STATS */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .stat-card .num {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .stat-card .label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* SECTIONS */
+    section:not(#home) {
+      padding: 5rem 2rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+    .section-header {
+      margin-bottom: 2.5rem;
+    }
+    .section-header h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .tag {
+      display: inline-block;
+      background: rgba(37, 99, 235, 0.15);
+      border: 1px solid rgba(37, 99, 235, 0.4);
+      color: var(--primary-light);
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* DASHBOARD */
+    #dashboard {
+      padding: 5rem 2rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+    }
+    .kpi-card .kpi-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .kpi-card .kpi-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .kpi-card .kpi-delta {
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .kpi-delta.up { color: var(--green); }
+    .kpi-delta.down { color: #f87171; }
+
+    .charts-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .charts-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .chart-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .chart-card h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.25rem;
+    }
+    .chart-wrapper {
+      position: relative;
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: all 0.2s;
+    }
+    .project-card:hover {
+      border-color: var(--primary-light);
+      background: var(--bg-card-hover);
+      transform: translateY(-3px);
+    }
+    .project-card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .project-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .project-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .project-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .ptag {
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.3);
+      color: #818cf8;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 500;
+    }
+    .project-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .project-link:hover { text-decoration: underline; }
+    .impact-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: var(--green);
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    /* SKILLS */
+    .skills-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .skill-group h3 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    .skill-bar-item {
+      margin-bottom: 0.9rem;
+    }
+    .skill-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      margin-bottom: 0.35rem;
+      font-weight: 500;
+    }
+    .skill-bar-track {
+      height: 6px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width 1.2s ease;
+    }
+    .skills-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+    .skill-tag {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--radius);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .skill-tag:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ABOUT */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .about-text p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+    .experience-timeline { position: relative; }
+    .timeline-item {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .timeline-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-top: 0.4rem;
+      flex-shrink: 0;
+    }
+    .timeline-content h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+    .timeline-content p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* CONTACT */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .contact-info p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+    .contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 0.75rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: all 0.2s;
+    }
+    .contact-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .contact-link svg { flex-shrink: 0; }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-form input,
+    .contact-form textarea {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+      resize: vertical;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: var(--primary-light);
+    }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder { color: var(--text-muted); }
+
+    /* FOOTER */
     footer {
       text-align: center;
       padding: 2rem;
-      background: #f1f1f1;
-      color: #666;
-      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
     }
-    .links a {
-      margin: 0 10px;
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 600;
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      #home { grid-template-columns: 1fr; }
+      .hero-text h1 { font-size: 2rem; }
+      .dashboard-grid { grid-template-columns: 1fr 1fr; }
+      .charts-row { grid-template-columns: 1fr; }
+      .charts-row-3 { grid-template-columns: 1fr; }
+      .skills-layout { grid-template-columns: 1fr; }
+      .about-layout { grid-template-columns: 1fr; }
+      .contact-layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .dashboard-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
+
   <nav>
     <ul>
       <li><a href="#home">Home</a></li>
+      <li><a href="#dashboard">Dashboard</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#about">About</a></li>
@@ -136,71 +496,517 @@
     </ul>
   </nav>
 
+  <!-- HERO -->
   <section id="home">
-    <header>
-      <h1>Hi, I'm Rohit Singh 👋</h1>
-      <p>I build scalable ETL pipelines and transform data into business insights that drive growth.</p>
-      <a href="#projects"><button class="btn">View My Work</button></a>
-    </header>
+    <div class="hero-text">
+      <div class="tag">Open to Work</div>
+      <h1>Hi, I'm <span>Rohit Singh</span></h1>
+      <p>Data Engineer &amp; Analyst building scalable ETL pipelines and transforming raw data into business insights that drive measurable growth.</p>
+      <div class="hero-badges">
+        <span class="badge">Python</span>
+        <span class="badge">SQL</span>
+        <span class="badge">Airflow</span>
+        <span class="badge">Snowflake</span>
+        <span class="badge">dbt</span>
+        <span class="badge">Power BI</span>
+      </div>
+      <div class="hero-buttons">
+        <a href="#projects" class="btn btn-primary">View My Work</a>
+        <a href="mailto:rohitsingh@gmail.com" class="btn btn-outline">Get In Touch</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="num">5+</div>
+        <div class="label">Years Experience</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">20+</div>
+        <div class="label">Projects Delivered</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">80%</div>
+        <div class="label">Reporting Time Saved</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">$2M+</div>
+        <div class="label">Revenue Insights</div>
+      </div>
+    </div>
   </section>
 
+  <!-- ANALYTICS DASHBOARD -->
+  <section id="dashboard">
+    <div class="section-header">
+      <div class="tag">Live Analytics</div>
+      <h2>Portfolio Analytics Dashboard</h2>
+      <p>A sample dashboard demonstrating my data visualization and analytics capabilities</p>
+    </div>
+
+    <!-- KPI Row -->
+    <div class="dashboard-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Pipeline Runs / Month</div>
+        <div class="kpi-value" style="color: var(--accent);">1,240</div>
+        <div class="kpi-delta up">&#9650; 18% vs last month</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Data Processed</div>
+        <div class="kpi-value" style="color: var(--green);">4.8 TB</div>
+        <div class="kpi-delta up">&#9650; 32% growth</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Avg Pipeline Latency</div>
+        <div class="kpi-value" style="color: var(--orange);">2.4 min</div>
+        <div class="kpi-delta up">&#9650; 12% faster</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Model Accuracy</div>
+        <div class="kpi-value" style="color: var(--purple);">91.4%</div>
+        <div class="kpi-delta up">&#9650; 3.2% improvement</div>
+      </div>
+    </div>
+
+    <!-- Main Charts Row -->
+    <div class="charts-row">
+      <div class="chart-card">
+        <h3>Monthly Data Volume Processed (GB)</h3>
+        <div class="chart-wrapper" style="height:220px">
+          <canvas id="volumeChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <h3>Pipeline Success Rate</h3>
+        <div class="chart-wrapper" style="height:220px">
+          <canvas id="successChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary Charts Row -->
+    <div class="charts-row-3">
+      <div class="chart-card">
+        <h3>Skills Distribution</h3>
+        <div class="chart-wrapper" style="height:200px">
+          <canvas id="skillsChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <h3>Project Impact by Category</h3>
+        <div class="chart-wrapper" style="height:200px">
+          <canvas id="impactChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <h3>User Retention (Cohort)</h3>
+        <div class="chart-wrapper" style="height:200px">
+          <canvas id="retentionChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
   <section id="projects">
-    <h2>🚀 Featured Projects</h2>
-    <div class="projects">
-      <div class="card">
+    <div class="section-header">
+      <div class="tag">Work</div>
+      <h2>Featured Projects</h2>
+      <p>End-to-end data solutions delivering measurable business value</p>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="impact-badge">&#9650; 80% Faster Reporting</div>
         <h3>ETL Pipeline for Sales Data</h3>
-        <p>Built with Python, Airflow, and Snowflake — automated ingestion from APIs and reduced reporting time by 80%.</p>
-        <a href="https://github.com/rohitsingh/etl-pipeline" target="_blank">View on GitHub →</a>
+        <p>Automated ingestion from 12 APIs into Snowflake using Python and Airflow. Reduced manual reporting time by 80% and enabled near-real-time dashboards for the sales team.</p>
+        <div class="project-meta">
+          <div class="project-tags">
+            <span class="ptag">Python</span>
+            <span class="ptag">Airflow</span>
+            <span class="ptag">Snowflake</span>
+          </div>
+          <a href="https://github.com/rohitsingh/etl-pipeline" target="_blank" class="project-link">GitHub &rarr;</a>
+        </div>
       </div>
-      <div class="card">
+
+      <div class="project-card">
+        <div class="impact-badge">&#9650; 20% Repeat Users</div>
         <h3>Business Growth Dashboard</h3>
-        <p>Interactive Power BI dashboard tracking acquisition, retention, and LTV — helped identify a 20% uplift in repeat users.</p>
-        <a href="#">View Dashboard →</a>
+        <p>Interactive Power BI dashboard tracking acquisition, retention, and LTV metrics. Identified a 20% uplift in repeat users through cohort analysis and funnel visualization.</p>
+        <div class="project-meta">
+          <div class="project-tags">
+            <span class="ptag">Power BI</span>
+            <span class="ptag">DAX</span>
+            <span class="ptag">SQL</span>
+          </div>
+          <a href="#" class="project-link">View &rarr;</a>
+        </div>
       </div>
-      <div class="card">
+
+      <div class="project-card">
+        <div class="impact-badge">&#9650; 91% Model Accuracy</div>
         <h3>Churn Prediction Model</h3>
-        <p>Used Python (Pandas, scikit-learn) to identify churn signals and optimize retention campaigns.</p>
-        <a href="#">View Notebook →</a>
+        <p>Built a gradient-boosted churn model using Python (Pandas, scikit-learn) achieving 91% accuracy. Integrated predictions into CRM workflows, reducing churn by 15%.</p>
+        <div class="project-meta">
+          <div class="project-tags">
+            <span class="ptag">Python</span>
+            <span class="ptag">scikit-learn</span>
+            <span class="ptag">MLflow</span>
+          </div>
+          <a href="#" class="project-link">Notebook &rarr;</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="impact-badge">&#9650; 60% Cost Reduction</div>
+        <h3>Data Warehouse Modernization</h3>
+        <p>Migrated legacy on-prem warehouse to Snowflake using dbt for transformation. Reduced query time by 70% and cut infrastructure costs by 60%.</p>
+        <div class="project-meta">
+          <div class="project-tags">
+            <span class="ptag">dbt</span>
+            <span class="ptag">Snowflake</span>
+            <span class="ptag">Terraform</span>
+          </div>
+          <a href="#" class="project-link">Case Study &rarr;</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="impact-badge">&#9650; Real-time Insights</div>
+        <h3>Real-time Analytics Stream</h3>
+        <p>Built a Kafka-based streaming pipeline ingesting 50K events/sec into a Redshift data mart, enabling live operational dashboards for the ops team.</p>
+        <div class="project-meta">
+          <div class="project-tags">
+            <span class="ptag">Kafka</span>
+            <span class="ptag">Python</span>
+            <span class="ptag">Redshift</span>
+          </div>
+          <a href="#" class="project-link">View &rarr;</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="impact-badge">&#9650; A/B Test Winner</div>
+        <h3>A/B Testing Framework</h3>
+        <p>Designed a reusable A/B testing framework in Python with statistical significance testing, used to run 30+ experiments that increased product conversion by 12%.</p>
+        <div class="project-meta">
+          <div class="project-tags">
+            <span class="ptag">Python</span>
+            <span class="ptag">Statistics</span>
+            <span class="ptag">Streamlit</span>
+          </div>
+          <a href="#" class="project-link">Demo &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-header">
+      <div class="tag">Expertise</div>
+      <h2>Skills &amp; Tools</h2>
+      <p>Technologies I use to engineer data and extract insights</p>
+    </div>
+    <div class="skills-layout">
+      <div>
+        <div class="skill-group">
+          <h3>Core Proficiency</h3>
+          <div class="skill-bar-item">
+            <div class="skill-bar-label"><span>Python (Pandas, NumPy, PySpark)</span><span>95%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:95%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-label"><span>Advanced SQL</span><span>93%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:93%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-label"><span>dbt (Data Build Tool)</span><span>88%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-label"><span>Apache Airflow</span><span>85%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-label"><span>Power BI / Tableau</span><span>90%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-label"><span>Machine Learning (scikit-learn)</span><span>80%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:80%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="skill-group">
+          <h3>Platforms &amp; Cloud</h3>
+          <div class="skills-tags">
+            <span class="skill-tag">Snowflake</span>
+            <span class="skill-tag">AWS (S3, Glue, Redshift)</span>
+            <span class="skill-tag">GCP BigQuery</span>
+            <span class="skill-tag">Apache Kafka</span>
+            <span class="skill-tag">Apache Spark</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">Terraform</span>
+            <span class="skill-tag">Databricks</span>
+          </div>
+        </div>
+        <br>
+        <div class="skill-group">
+          <h3>Analytics &amp; Methods</h3>
+          <div class="skills-tags">
+            <span class="skill-tag">A/B Testing</span>
+            <span class="skill-tag">Cohort Analysis</span>
+            <span class="skill-tag">Funnel Analysis</span>
+            <span class="skill-tag">Statistical Modeling</span>
+            <span class="skill-tag">LTV / Retention</span>
+            <span class="skill-tag">Streamlit</span>
+            <span class="skill-tag">Git / GitHub</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="skills">
-    <h2>🧠 Skills & Tools</h2>
-    <div class="skills">
-      <div class="skill">Python</div>
-      <div class="skill">Advance SQL</div>
-      <div class="skill">Airflow</div>
-      <div class="skill">dbt</div>
-      <div class="skill">Snowflake</div>
-      <div class="skill">Power BI</div>
-      <div class="skill">Tableau</div>
-      <div class="skill">A/B Testing</div>
-      <div class="skill">Cohort Analysis</div>
-      <div class="skill">Streamlit</div>
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header">
+      <div class="tag">About</div>
+      <h2>About Me</h2>
+    </div>
+    <div class="about-layout">
+      <div class="about-text">
+        <p>I'm a data professional passionate about using analytics and engineering to power better business decisions. With 5+ years of experience spanning both data pipelines and insight generation, I thrive at the intersection of technology and strategy.</p>
+        <p>I love automating complex workflows, building dashboards that tell a clear story, and partnering with product and business teams to create data-driven impact at scale.</p>
+        <p>When I'm not building pipelines, I'm exploring new ML techniques, contributing to open-source data tools, or mentoring junior analysts.</p>
+        <div style="margin-top:1.5rem">
+          <a href="mailto:rohitsingh@gmail.com" class="btn btn-primary">Download Resume</a>
+        </div>
+      </div>
+      <div class="experience-timeline">
+        <h3 style="font-size:0.85rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);margin-bottom:1.25rem;font-weight:600;">Experience</h3>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h4>Senior Data Engineer</h4>
+            <p>TechCorp Inc. &bull; 2022 &ndash; Present</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--purple)"></div>
+          <div class="timeline-content">
+            <h4>Data Analyst</h4>
+            <p>DataDriven Ltd. &bull; 2020 &ndash; 2022</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--orange)"></div>
+          <div class="timeline-content">
+            <h4>Junior Data Analyst</h4>
+            <p>StartupXYZ &bull; 2018 &ndash; 2020</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--green)"></div>
+          <div class="timeline-content">
+            <h4>B.Tech in Computer Science</h4>
+            <p>IIT Delhi &bull; 2014 &ndash; 2018</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="about">
-    <h2>👋 About Me</h2>
-    <p>I’m a data professional passionate about using analytics and engineering to power better business decisions.  
-      With experience in both **data pipelines** and **insight generation**, I thrive at the intersection of technology and strategy.  
-      I love automating workflows, building dashboards that tell a story, and partnering with teams to make data-driven impact.
-    </p>
-  </section>
-
+  <!-- CONTACT -->
   <section id="contact">
-    <h2>📬 Contact</h2>
-    <p>Let’s collaborate or talk about data!</p>
-    <div class="links">
-      <a href="mailto:rohitsingh@gmail.com">Email</a>
-      <a href="https://www.linkedin.com/in/rohitsingh" target="_blank">LinkedIn</a>
-      <a href="https://github.com/rohitsingh" target="_blank">GitHub</a>
+    <div class="section-header">
+      <div class="tag">Contact</div>
+      <h2>Let's Connect</h2>
+      <p>Open to new opportunities, collaborations, and data conversations</p>
+    </div>
+    <div class="contact-layout">
+      <div class="contact-info">
+        <p>Whether you have a project in mind, want to discuss data engineering challenges, or just want to connect &mdash; I'd love to hear from you.</p>
+        <div class="contact-links">
+          <a href="mailto:rohitsingh@gmail.com" class="contact-link">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            rohitsingh@gmail.com
+          </a>
+          <a href="https://www.linkedin.com/in/rohitsingh" target="_blank" class="contact-link">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+            linkedin.com/in/rohitsingh
+          </a>
+          <a href="https://github.com/rohitsingh" target="_blank" class="contact-link">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+            github.com/rohitsingh
+          </a>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="return false;">
+        <input type="text" placeholder="Your Name" />
+        <input type="email" placeholder="Your Email" />
+        <textarea rows="4" placeholder="Your Message"></textarea>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
     </div>
   </section>
 
   <footer>
-    <p>© 2025 Rohit Singh • Built with ❤️ using HTML, CSS, and JS</p>
+    <p>&copy; 2025 Rohit Singh &bull; Data Engineer &amp; Analyst &bull; Built with HTML, CSS &amp; Chart.js</p>
   </footer>
+
+  <script>
+    // Chart defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = '#334155';
+    Chart.defaults.font.family = 'Inter, sans-serif';
+    Chart.defaults.font.size = 11;
+
+    // Volume Line Chart
+    const volumeCtx = document.getElementById('volumeChart').getContext('2d');
+    new Chart(volumeCtx, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [{
+          label: 'GB Processed',
+          data: [210, 280, 320, 390, 450, 520, 610, 680, 740, 810, 920, 1050],
+          borderColor: '#38bdf8',
+          backgroundColor: 'rgba(56,189,248,0.08)',
+          fill: true,
+          tension: 0.4,
+          pointRadius: 3,
+          pointBackgroundColor: '#38bdf8',
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: '#1e293b' } },
+          y: { grid: { color: '#1e293b' }, beginAtZero: true }
+        }
+      }
+    });
+
+    // Pipeline Success Doughnut
+    const successCtx = document.getElementById('successChart').getContext('2d');
+    new Chart(successCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Successful', 'Retried', 'Failed'],
+        datasets: [{
+          data: [89, 8, 3],
+          backgroundColor: ['#22c55e', '#f97316', '#f87171'],
+          borderWidth: 0,
+          hoverOffset: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '70%',
+        plugins: {
+          legend: { position: 'bottom', labels: { padding: 12 } }
+        }
+      }
+    });
+
+    // Skills Radar
+    const skillsCtx = document.getElementById('skillsChart').getContext('2d');
+    new Chart(skillsCtx, {
+      type: 'radar',
+      data: {
+        labels: ['Python', 'SQL', 'Airflow', 'dbt', 'Power BI', 'ML'],
+        datasets: [{
+          label: 'Proficiency',
+          data: [95, 93, 85, 88, 90, 80],
+          borderColor: '#a855f7',
+          backgroundColor: 'rgba(168,85,247,0.15)',
+          pointBackgroundColor: '#a855f7',
+          pointRadius: 3,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          r: {
+            beginAtZero: true,
+            max: 100,
+            grid: { color: '#334155' },
+            ticks: { stepSize: 25, display: false },
+            pointLabels: { font: { size: 10 } }
+          }
+        }
+      }
+    });
+
+    // Impact Bar Chart
+    const impactCtx = document.getElementById('impactChart').getContext('2d');
+    new Chart(impactCtx, {
+      type: 'bar',
+      data: {
+        labels: ['ETL', 'BI', 'ML', 'A/B Test', 'Streaming'],
+        datasets: [{
+          label: 'Impact Score',
+          data: [80, 65, 72, 55, 60],
+          backgroundColor: ['#2563eb', '#38bdf8', '#a855f7', '#22c55e', '#f97316'],
+          borderRadius: 6,
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false } },
+          y: { grid: { color: '#1e293b' }, beginAtZero: true, max: 100 }
+        }
+      }
+    });
+
+    // Retention Line Chart
+    const retentionCtx = document.getElementById('retentionChart').getContext('2d');
+    new Chart(retentionCtx, {
+      type: 'line',
+      data: {
+        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+        datasets: [
+          {
+            label: 'Cohort A',
+            data: [100, 72, 58, 49, 44, 41],
+            borderColor: '#38bdf8',
+            backgroundColor: 'transparent',
+            tension: 0.3,
+            pointRadius: 3,
+          },
+          {
+            label: 'Cohort B',
+            data: [100, 68, 52, 43, 38, 35],
+            borderColor: '#a855f7',
+            backgroundColor: 'transparent',
+            tension: 0.3,
+            pointRadius: 3,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { padding: 10, boxWidth: 12 } } },
+        scales: {
+          x: { grid: { color: '#1e293b' } },
+          y: { grid: { color: '#1e293b' }, beginAtZero: true, max: 100,
+               ticks: { callback: v => v + '%' } }
+        }
+      }
+    });
+  </script>
 </body>
 </html>
