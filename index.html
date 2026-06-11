@@ -4,266 +4,419 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rohit Singh | Analytics Engineer</title>
+  <meta name="description" content="Rohit Singh — Analytics Engineer & Senior Power BI Developer. Microsoft Fabric, Direct Lake semantic models, AI-augmented analytics. 6+ years of measurable outcomes." />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #1d4ed8;
+      --primary: #2563eb;
       --primary-light: #3b82f6;
       --accent: #38bdf8;
-      --green: #22c55e;
-      --orange: #f97316;
-      --purple: #a855f7;
-      --bg: #0f172a;
-      --bg-card: #1e293b;
-      --bg-hover: #253347;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-      --border: #334155;
-      --radius: 12px;
+      --green: #34d399;
+      --orange: #fb923c;
+      --purple: #a78bfa;
+      --red: #f87171;
+      --bg: #080d1a;
+      --bg-card: rgba(30,41,59,0.55);
+      --bg-solid: #111a2e;
+      --text: #e6edf6;
+      --muted: #8fa3bd;
+      --border: rgba(148,163,184,0.16);
+      --border-hover: rgba(56,189,248,0.45);
+      --radius: 14px;
     }
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; scroll-behavior:smooth; }
-    body { background:var(--bg); color:var(--text); line-height:1.6; }
-    nav {
-      position:fixed; width:100%; top:0; left:0;
-      background:rgba(15,23,42,0.92); backdrop-filter:blur(12px);
-      border-bottom:1px solid var(--border); z-index:100;
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
+    html { scroll-behavior:smooth; }
+    body {
+      background:var(--bg); color:var(--text); line-height:1.6;
+      background-image:
+        radial-gradient(ellipse 60% 40% at 15% -5%, rgba(37,99,235,0.16), transparent),
+        radial-gradient(ellipse 50% 35% at 90% 15%, rgba(56,189,248,0.08), transparent),
+        radial-gradient(ellipse 45% 35% at 50% 105%, rgba(167,139,250,0.07), transparent);
+      background-attachment:fixed;
     }
-    nav ul { display:flex; justify-content:center; list-style:none; padding:1rem; gap:2rem; flex-wrap:wrap; }
-    nav a { text-decoration:none; color:var(--muted); font-weight:500; font-size:0.88rem; transition:color 0.2s; }
+    ::selection { background:rgba(56,189,248,0.3); }
+
+    nav { position:fixed; width:100%; top:0; left:0; background:rgba(8,13,26,0.85); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); z-index:100; }
+    nav ul { display:flex; justify-content:center; list-style:none; padding:0.95rem 1rem; gap:1.9rem; flex-wrap:wrap; }
+    nav a { text-decoration:none; color:var(--muted); font-weight:500; font-size:0.86rem; transition:color 0.2s; }
     nav a:hover { color:var(--accent); }
-    #home { padding:7rem 2rem 4rem; max-width:1100px; margin:auto; display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; }
-    .hero-text h1 { font-size:2.8rem; font-weight:700; line-height:1.2; margin-bottom:0.5rem; }
-    .hero-text h1 span { color:var(--accent); }
-    .hero-text .subtitle { font-size:1rem; color:var(--muted); margin-bottom:0.4rem; }
-    .hero-text .location { font-size:0.85rem; color:var(--muted); margin-bottom:1.2rem; }
-    .hero-badges { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:1.5rem; }
-    .badge { background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); color:var(--accent); padding:0.25rem 0.75rem; border-radius:999px; font-size:0.78rem; font-weight:500; }
-    .hero-buttons { display:flex; gap:0.75rem; flex-wrap:wrap; }
-    .btn { padding:0.7rem 1.4rem; border-radius:var(--radius); font-weight:600; font-size:0.88rem; cursor:pointer; text-decoration:none; transition:all 0.2s; display:inline-block; }
-    .btn-primary { background:var(--primary); color:white; border:none; }
-    .btn-primary:hover { background:#1e40af; transform:translateY(-1px); }
-    .btn-outline { background:transparent; color:var(--text); border:1px solid var(--border); }
-    .btn-outline:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-1px); }
-    .hero-stats { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-    .stat-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:1.25rem; text-align:center; }
-    .stat-card .num { font-size:1.8rem; font-weight:700; color:var(--accent); }
-    .stat-card .lbl { font-size:0.78rem; color:var(--muted); margin-top:0.2rem; }
-    section:not(#home) { padding:5rem 2rem; max-width:1100px; margin:auto; }
-    .sec-header { margin-bottom:2.5rem; }
-    .sec-header h2 { font-size:1.7rem; font-weight:700; margin-bottom:0.4rem; }
-    .sec-header p { color:var(--muted); font-size:0.92rem; }
-    .tag { display:inline-block; background:rgba(37,99,235,0.15); border:1px solid rgba(37,99,235,0.4); color:var(--primary-light); padding:0.2rem 0.7rem; border-radius:999px; font-size:0.72rem; font-weight:600; margin-bottom:0.6rem; text-transform:uppercase; letter-spacing:0.05em; }
-    #dashboard { padding:5rem 2rem; max-width:1100px; margin:auto; }
-    .kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:1.25rem; }
-    .kpi { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:1.25rem; }
-    .kpi-lbl { font-size:0.74rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.4rem; }
-    .kpi-val { font-size:1.7rem; font-weight:700; margin-bottom:0.2rem; }
-    .kpi-delta { font-size:0.78rem; }
-    .up { color:var(--green); } .down { color:#f87171; }
-    .charts-2 { display:grid; grid-template-columns:2fr 1fr; gap:1rem; margin-bottom:1rem; }
-    .charts-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; margin-bottom:1rem; }
-    .chart-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; }
-    .chart-card h3 { font-size:0.8rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:1.2rem; }
-    .proj-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:1.2rem; }
-    .proj-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; transition:all 0.2s; }
-    .proj-card:hover { border-color:var(--primary-light); background:var(--bg-hover); transform:translateY(-3px); }
-    .proj-card h3 { font-size:1rem; font-weight:600; margin-bottom:0.4rem; }
-    .proj-card p { color:var(--muted); font-size:0.88rem; margin-bottom:1rem; }
-    .proj-meta { display:flex; justify-content:space-between; align-items:center; }
-    .proj-tags { display:flex; gap:0.4rem; flex-wrap:wrap; }
-    .ptag { background:rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.3); color:#818cf8; padding:0.18rem 0.55rem; border-radius:999px; font-size:0.7rem; font-weight:500; }
-    .impact { display:inline-flex; align-items:center; gap:0.3rem; background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.3); color:var(--green); padding:0.2rem 0.65rem; border-radius:999px; font-size:0.75rem; font-weight:600; margin-bottom:0.75rem; }
-    .skills-layout { display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; }
-    .skill-group h3 { font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); margin-bottom:1rem; font-weight:600; }
-    .skill-bar { margin-bottom:0.85rem; }
-    .skill-bar-lbl { display:flex; justify-content:space-between; font-size:0.86rem; margin-bottom:0.3rem; font-weight:500; }
-    .skill-track { height:6px; background:var(--border); border-radius:999px; overflow:hidden; }
-    .skill-fill { height:100%; border-radius:999px; background:linear-gradient(90deg,var(--primary),var(--accent)); }
-    .tag-cloud { display:flex; flex-wrap:wrap; gap:0.55rem; margin-top:0.75rem; }
-    .stag { background:var(--bg-card); border:1px solid var(--border); color:var(--text); padding:0.35rem 0.85rem; border-radius:var(--radius); font-size:0.83rem; font-weight:500; transition:all 0.2s; }
-    .stag:hover { border-color:var(--accent); color:var(--accent); }
-    .exp-list { display:flex; flex-direction:column; gap:0; }
-    .exp-item { display:grid; grid-template-columns:140px 1fr; gap:1.5rem; padding:1.5rem 0; border-bottom:1px solid var(--border); }
-    .exp-item:last-child { border-bottom:none; }
-    .exp-date { font-size:0.8rem; color:var(--muted); font-weight:500; padding-top:0.15rem; }
-    .exp-body h3 { font-size:1rem; font-weight:600; margin-bottom:0.15rem; }
-    .exp-body .company { font-size:0.88rem; color:var(--accent); margin-bottom:0.6rem; font-weight:500; }
-    .exp-body ul { list-style:none; display:flex; flex-direction:column; gap:0.4rem; }
-    .exp-body ul li { font-size:0.87rem; color:var(--muted); padding-left:1rem; position:relative; }
-    .exp-body ul li::before { content:"\25B8"; position:absolute; left:0; color:var(--primary-light); }
-    .contact-layout { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; }
-    .contact-info p { color:var(--muted); font-size:0.92rem; margin-bottom:1.5rem; }
-    .contact-links { display:flex; flex-direction:column; gap:0.7rem; }
-    .clink { display:flex; align-items:center; gap:0.75rem; color:var(--text); text-decoration:none; font-size:0.88rem; padding:0.75rem 1rem; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); transition:all 0.2s; }
-    .clink:hover { border-color:var(--accent); color:var(--accent); }
-    .contact-form { display:flex; flex-direction:column; gap:0.9rem; }
-    .contact-form input, .contact-form textarea { background:var(--bg-card); border:1px solid var(--border); color:var(--text); padding:0.75rem 1rem; border-radius:var(--radius); font-size:0.88rem; font-family:inherit; transition:border-color 0.2s; resize:vertical; }
-    .contact-form input:focus, .contact-form textarea:focus { outline:none; border-color:var(--primary-light); }
-    .contact-form input::placeholder, .contact-form textarea::placeholder { color:var(--muted); }
-    footer { text-align:center; padding:2rem; border-top:1px solid var(--border); color:var(--muted); font-size:0.82rem; }
-    @media(max-width:768px) {
-      #home { grid-template-columns:1fr; }
-      .hero-text h1 { font-size:2rem; }
-      .kpi-grid { grid-template-columns:1fr 1fr; }
-      .charts-2, .charts-3 { grid-template-columns:1fr; }
-      .skills-layout { grid-template-columns:1fr; }
-      .exp-item { grid-template-columns:1fr; gap:0.25rem; }
-      .contact-layout { grid-template-columns:1fr; }
+
+    .grad { background:linear-gradient(95deg,#38bdf8,#818cf8 60%,#a78bfa); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .tag { display:inline-block; background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.3); color:var(--accent); padding:0.22rem 0.75rem; border-radius:999px; font-size:0.7rem; font-weight:600; margin-bottom:0.8rem; text-transform:uppercase; letter-spacing:0.09em; }
+    .sec-header { margin-bottom:2.2rem; }
+    .sec-header h2 { font-size:1.65rem; font-weight:700; margin-bottom:0.35rem; letter-spacing:-0.01em; }
+    .sec-header p { color:var(--muted); font-size:0.92rem; max-width:620px; }
+    section { padding:4.5rem 2rem; max-width:1080px; margin:auto; }
+
+    .reveal { opacity:0; transform:translateY(22px); transition:opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.in { opacity:1; transform:none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior:auto; }
+      .reveal { opacity:1; transform:none; transition:none; }
     }
-    @media(max-width:480px) { .kpi-grid { grid-template-columns:1fr; } }
+
+    /* ---------- Hero ---------- */
+    #home { padding:7.5rem 2rem 4rem; display:grid; grid-template-columns:1.15fr 1fr; gap:3rem; align-items:center; }
+    .hero-text h1 { font-size:3rem; font-weight:800; line-height:1.15; margin-bottom:0.6rem; letter-spacing:-0.02em; }
+    .hero-text .subtitle { font-size:1.02rem; color:var(--text); font-weight:500; margin-bottom:0.35rem; }
+    .hero-text .location { font-size:0.84rem; color:var(--muted); margin-bottom:1.3rem; }
+    .hero-text .pitch { font-size:0.92rem; color:var(--muted); margin-bottom:1.5rem; max-width:520px; }
+    .hero-text .pitch strong { color:var(--text); font-weight:600; }
+    .hero-buttons { display:flex; gap:0.75rem; flex-wrap:wrap; }
+    .btn { padding:0.72rem 1.45rem; border-radius:var(--radius); font-weight:600; font-size:0.88rem; cursor:pointer; text-decoration:none; transition:all 0.2s; display:inline-flex; align-items:center; gap:0.5rem; }
+    .btn-primary { background:linear-gradient(95deg,var(--primary),#1d4ed8); color:white; border:none; box-shadow:0 8px 24px rgba(37,99,235,0.35); }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 28px rgba(37,99,235,0.45); }
+    .btn-outline { background:transparent; color:var(--text); border:1px solid var(--border); }
+    .btn-outline:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+
+    .hero-stats { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .stat-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:1.4rem 1.1rem; text-align:center; backdrop-filter:blur(8px); transition:border-color 0.25s, transform 0.25s; }
+    .stat-card:hover { border-color:var(--border-hover); transform:translateY(-3px); }
+    .stat-card .num { font-size:1.9rem; font-weight:800; letter-spacing:-0.02em; }
+    .stat-card .lbl { font-size:0.74rem; color:var(--muted); margin-top:0.25rem; line-height:1.4; }
+
+    /* ---------- Impact dashboard ---------- */
+    .kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:1.1rem; }
+    .kpi { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:1.3rem 1.25rem; position:relative; overflow:hidden; backdrop-filter:blur(8px); transition:border-color 0.25s, transform 0.25s; }
+    .kpi:hover { border-color:var(--border-hover); transform:translateY(-3px); }
+    .kpi::after { content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--kc,var(--accent)); border-radius:3px; }
+    .kpi-lbl { font-size:0.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.45rem; font-weight:600; }
+    .kpi-val { font-size:2rem; font-weight:800; letter-spacing:-0.02em; line-height:1.1; color:var(--kc,var(--accent)); }
+    .kpi-src { font-size:0.76rem; color:var(--muted); margin-top:0.4rem; }
+    .charts-2 { display:grid; grid-template-columns:1.2fr 1fr; gap:1rem; }
+    .chart-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:1.4rem 1.5rem; backdrop-filter:blur(8px); }
+    .chart-card h3 { font-size:0.78rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.25rem; }
+    .chart-card .sub { font-size:0.76rem; color:var(--muted); opacity:0.75; margin-bottom:1rem; }
+
+    /* ---------- Signature work ---------- */
+    .work-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; }
+    .work-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; backdrop-filter:blur(8px); transition:border-color 0.25s, transform 0.25s; display:flex; flex-direction:column; gap:0.65rem; }
+    .work-card:hover { border-color:var(--border-hover); transform:translateY(-4px); }
+    .impact { align-self:flex-start; display:inline-flex; align-items:center; gap:0.35rem; background:rgba(52,211,153,0.1); border:1px solid rgba(52,211,153,0.32); color:var(--green); padding:0.2rem 0.7rem; border-radius:999px; font-size:0.74rem; font-weight:700; }
+    .work-card h3 { font-size:0.98rem; font-weight:700; line-height:1.4; }
+    .work-card p { color:var(--muted); font-size:0.85rem; flex:1; }
+    .work-tags { display:flex; gap:0.4rem; flex-wrap:wrap; }
+    .ptag { background:rgba(129,140,248,0.1); border:1px solid rgba(129,140,248,0.3); color:#a5b4fc; padding:0.16rem 0.55rem; border-radius:999px; font-size:0.68rem; font-weight:600; }
+
+    /* ---------- Experience timeline (pointer fully contained) ---------- */
+    .timeline { position:relative; padding-left:2rem; overflow:hidden; }
+    .timeline::before {
+      content:""; position:absolute; left:7px; top:10px; bottom:10px; width:2px;
+      background:linear-gradient(180deg, var(--accent), var(--primary) 55%, rgba(37,99,235,0));
+    }
+    .tl-item { position:relative; padding:0 0 2.2rem 1.2rem; }
+    .tl-item:last-child { padding-bottom:0.25rem; }
+    .tl-item::before {
+      content:""; position:absolute; left:-2rem; top:8px; width:12px; height:12px; margin-left:2px;
+      border-radius:50%; background:var(--bg); border:2.5px solid var(--accent);
+      box-shadow:0 0 0 4px rgba(56,189,248,0.14);
+    }
+    .tl-head { display:flex; justify-content:space-between; align-items:baseline; gap:1rem; flex-wrap:wrap; margin-bottom:0.2rem; }
+    .tl-head h3 { font-size:1.02rem; font-weight:700; }
+    .tl-date { font-size:0.76rem; color:var(--accent); font-weight:600; background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.25); padding:0.14rem 0.65rem; border-radius:999px; white-space:nowrap; }
+    .tl-company { font-size:0.86rem; color:var(--muted); font-weight:500; margin-bottom:0.65rem; }
+    .tl-item ul { list-style:none; display:flex; flex-direction:column; gap:0.42rem; }
+    .tl-item ul li { font-size:0.87rem; color:var(--muted); padding-left:1.05rem; position:relative; }
+    .tl-item ul li::before { content:"\25B8"; position:absolute; left:0; top:0; color:var(--primary-light); }
+    .tl-item ul li b { color:var(--text); font-weight:600; }
+    .metric { color:var(--green) !important; font-weight:700; }
+
+    .edu-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; margin-top:2.4rem; }
+    .edu-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:1.1rem 1.3rem; backdrop-filter:blur(8px); }
+    .edu-card .t { font-weight:600; font-size:0.9rem; }
+    .edu-card .s { color:var(--muted); font-size:0.8rem; margin-top:0.15rem; }
+    .edu-card .badge-cert { display:inline-block; margin-top:0.45rem; font-size:0.68rem; font-weight:700; padding:0.12rem 0.55rem; border-radius:999px; }
+    .cert-done { background:rgba(52,211,153,0.1); border:1px solid rgba(52,211,153,0.32); color:var(--green); }
+    .cert-prog { background:rgba(251,146,60,0.1); border:1px solid rgba(251,146,60,0.32); color:var(--orange); }
+
+    /* ---------- Skills ---------- */
+    .skills-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; }
+    .skill-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:1.3rem 1.4rem; backdrop-filter:blur(8px); }
+    .skill-card h3 { font-size:0.76rem; text-transform:uppercase; letter-spacing:0.07em; color:var(--accent); margin-bottom:0.85rem; font-weight:700; }
+    .tag-cloud { display:flex; flex-wrap:wrap; gap:0.45rem; }
+    .stag { background:rgba(15,23,42,0.6); border:1px solid var(--border); color:var(--text); padding:0.28rem 0.75rem; border-radius:9px; font-size:0.79rem; font-weight:500; transition:all 0.2s; }
+    .stag:hover { border-color:var(--accent); color:var(--accent); }
+
+    /* ---------- Contact ---------- */
+    .contact-layout { display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; }
+    .clink { display:flex; align-items:center; gap:0.85rem; color:var(--text); text-decoration:none; font-size:0.88rem; font-weight:500; padding:1rem 1.2rem; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); transition:all 0.2s; backdrop-filter:blur(8px); }
+    .clink:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+    .clink svg { flex-shrink:0; }
+
+    footer { text-align:center; padding:2rem; border-top:1px solid var(--border); color:var(--muted); font-size:0.8rem; }
+
+    @media(max-width:880px) {
+      #home { grid-template-columns:1fr; padding-top:6.5rem; }
+      .hero-text h1 { font-size:2.2rem; }
+      .kpi-grid { grid-template-columns:1fr 1fr; }
+      .charts-2 { grid-template-columns:1fr; }
+      .work-grid { grid-template-columns:1fr; }
+      .skills-grid, .edu-grid, .contact-layout { grid-template-columns:1fr; }
+    }
+    @media(max-width:480px) { .kpi-grid { grid-template-columns:1fr; } nav ul { gap:1.1rem; } }
+
+    /* Keep each role intact if the page is printed / saved as PDF —
+       the timeline pointer must never split across pages */
+    @media print {
+      .timeline::before { display:none; }
+      .tl-item, .kpi, .work-card, .edu-card { break-inside:avoid; page-break-inside:avoid; }
+      nav { position:static; }
+      body { background:white; color:black; }
+    }
   </style>
 </head>
 <body>
 <nav>
   <ul>
     <li><a href="#home">Home</a></li>
-    <li><a href="#dashboard">Dashboard</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#skills">Skills</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#work">Work</a></li>
     <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
+
 <section id="home">
   <div class="hero-text">
     <div class="tag">Open to Opportunities</div>
-    <h1>Rohit <span>Singh</span></h1>
-    <p class="subtitle">Analytics Engineer &middot; Marketing &amp; Revenue Analytics &middot; Microsoft Fabric &amp; Power BI</p>
+    <h1>Rohit <span class="grad">Singh</span></h1>
+    <p class="subtitle">Analytics Engineer &middot; Senior Power BI Developer &middot; Microsoft Fabric &middot; AI-Augmented Analytics</p>
     <p class="location">&#128205; Bengaluru, India &nbsp;&bull;&nbsp; rowhit.singh99@gmail.com &nbsp;&bull;&nbsp; +91-9211344608</p>
-    <div class="hero-badges">
-      <span class="badge">Microsoft Fabric</span>
-      <span class="badge">Power BI</span>
-      <span class="badge">DAX</span>
-      <span class="badge">Salesforce</span>
-      <span class="badge">HubSpot</span>
-      <span class="badge">Fivetran</span>
-      <span class="badge">SQL</span>
-      <span class="badge">Python</span>
-    </div>
+    <p class="pitch">I build enterprise data platforms on <strong>Microsoft Fabric</strong> — Lakehouse, Direct Lake semantic models, and a <strong>316+ measure DAX library</strong> — and pair them with <strong>Claude AI + MCP Server</strong> automation. Every line on this page is a shipped, measured result.</p>
     <div class="hero-buttons">
-      <a href="#projects" class="btn btn-primary">View My Work</a>
-      <a href="mailto:rowhit.singh99@gmail.com" class="btn btn-outline">Get In Touch</a>
+      <a href="#impact" class="btn btn-primary">See the Numbers</a>
+      <a href="Rohit_Singh_Analytics_Engineer_Resume.pdf" download class="btn btn-outline">&#8595; Download Resume</a>
     </div>
   </div>
   <div class="hero-stats">
-    <div class="stat-card"><div class="num">5+</div><div class="lbl">Years Experience</div></div>
-    <div class="stat-card"><div class="num">7</div><div class="lbl">Roles Across Industries</div></div>
-    <div class="stat-card"><div class="num">80%</div><div class="lbl">Manual Reporting Eliminated</div></div>
-    <div class="stat-card"><div class="num">60%</div><div class="lbl">Dashboard Build Time Saved</div></div>
+    <div class="stat-card"><div class="num grad"><span class="count" data-to="6">0</span>+</div><div class="lbl">Years in Analytics Engineering</div></div>
+    <div class="stat-card"><div class="num grad"><span class="count" data-to="316">0</span>+</div><div class="lbl">DAX Measures in Certified Library</div></div>
+    <div class="stat-card"><div class="num grad"><span class="count" data-to="60">0</span>%</div><div class="lbl">Faster Dashboard Delivery</div></div>
+    <div class="stat-card"><div class="num grad"><span class="count" data-to="80">0</span>%</div><div class="lbl">Manual Reporting Eliminated</div></div>
   </div>
 </section>
-<section id="dashboard">
-  <div class="sec-header">
-    <div class="tag">Live Analytics</div>
-    <h2>Analytics Dashboard</h2>
-    <p>Demonstrating data visualisation expertise &mdash; the kind of dashboards I build for clients and stakeholders</p>
+
+<section id="impact">
+  <div class="sec-header reveal">
+    <div class="tag">Impact Dashboard</div>
+    <h2>Measured Outcomes, Not Buzzwords</h2>
+    <p>Every metric below is a delivered result from a real engagement — the same standard I hold for every dashboard I ship.</p>
   </div>
-  <div class="kpi-grid">
-    <div class="kpi"><div class="kpi-lbl">Funnel Conversion (MQL&rarr;Close)</div><div class="kpi-val" style="color:var(--accent)">18.4%</div><div class="kpi-delta up">&#9650; 3.2% vs prior quarter</div></div>
-    <div class="kpi"><div class="kpi-lbl">Pipeline Velocity</div><div class="kpi-val" style="color:var(--green)">24 days</div><div class="kpi-delta up">&#9650; 6 days faster</div></div>
-    <div class="kpi"><div class="kpi-lbl">Dashboard Build Time</div><div class="kpi-val" style="color:var(--orange)">~60% less</div><div class="kpi-delta up">&#9650; via semantic model</div></div>
-    <div class="kpi"><div class="kpi-lbl">Copilot Adoption Rate</div><div class="kpi-val" style="color:var(--purple)">73%</div><div class="kpi-delta up">&#9650; tracked org-wide</div></div>
+  <div class="kpi-grid reveal">
+    <div class="kpi" style="--kc:var(--accent)"><div class="kpi-lbl">Dashboard Delivery Time</div><div class="kpi-val">&minus;<span class="count" data-to="60">0</span>%</div><div class="kpi-src">Fabric star-schema semantic model &middot; M-Files</div></div>
+    <div class="kpi" style="--kc:var(--green)"><div class="kpi-lbl">Manual Reporting Effort</div><div class="kpi-val">&minus;<span class="count" data-to="80">0</span>%</div><div class="kpi-src">Automated Power BI suite &middot; 20+ stakeholders</div></div>
+    <div class="kpi" style="--kc:var(--purple)"><div class="kpi-lbl">Checkout Conversion</div><div class="kpi-val">+<span class="count" data-to="22">0</span>%</div><div class="kpi-src">Funnel A/B testing &middot; Nicobar Design</div></div>
+    <div class="kpi" style="--kc:var(--orange)"><div class="kpi-lbl">Client Reporting Cycles</div><div class="kpi-val">&minus;<span class="count" data-to="40">0</span>%</div><div class="kpi-src">Attribution &amp; ARPU dashboards &middot; 5+ clients</div></div>
   </div>
-  <div class="charts-2">
-    <div class="chart-card"><h3>MQL &rarr; SAO &rarr; Close Funnel (Monthly)</h3><div style="position:relative;height:220px"><canvas id="funnelChart"></canvas></div></div>
-    <div class="chart-card"><h3>Revenue Channel Mix</h3><div style="position:relative;height:220px"><canvas id="channelChart"></canvas></div></div>
-  </div>
-  <div class="charts-3">
-    <div class="chart-card"><h3>Skill Proficiency Radar</h3><div style="position:relative;height:200px"><canvas id="radarChart"></canvas></div></div>
-    <div class="chart-card"><h3>Campaign ROI by Source</h3><div style="position:relative;height:200px"><canvas id="roiChart"></canvas></div></div>
-    <div class="chart-card"><h3>User Retention Cohorts</h3><div style="position:relative;height:200px"><canvas id="retentionChart"></canvas></div></div>
-  </div>
-</section>
-<section id="projects">
-  <div class="sec-header"><div class="tag">Work</div><h2>Featured Projects</h2><p>Real deliverables from my professional experience</p></div>
-  <div class="proj-grid">
-    <div class="proj-card"><div class="impact">&#9650; 60% Faster Dashboard Build</div><h3>Star-Schema Semantic Model &mdash; Microsoft Fabric</h3><p>Architected a domain-centric star-schema in Microsoft Fabric replacing fragmented multi-model reporting with a single certified Power BI dataset, eliminating cross-report metric discrepancies.</p><div class="proj-meta"><div class="proj-tags"><span class="ptag">Fabric</span><span class="ptag">Power BI</span><span class="ptag">DAX</span><span class="ptag">Star Schema</span></div></div></div>
-    <div class="proj-card"><div class="impact">&#9650; Single Source of Truth</div><h3>Medallion Pipeline (Bronze&rarr;Silver&rarr;Gold)</h3><p>Built end-to-end medallion pipelines ingesting Salesforce, HubSpot, Zuora, and SQL Server via Fivetran into Fabric Warehouse. Gold layer is the governed source for all BI and self-service consumption.</p><div class="proj-meta"><div class="proj-tags"><span class="ptag">Fivetran</span><span class="ptag">Fabric</span><span class="ptag">Salesforce</span><span class="ptag">HubSpot</span></div></div></div>
-    <div class="proj-card"><div class="impact">&#9650; Full Funnel Visibility</div><h3>MQL &rarr; SAO &rarr; Close Funnel Analytics</h3><p>Designed funnel analytics with velocity, conversion rate, and cohort views. Surfaced CAC, ROAS, and multi-touch attribution insights in Power BI for Demand Gen, Digital, and RevOps teams.</p><div class="proj-meta"><div class="proj-tags"><span class="ptag">Power BI</span><span class="ptag">DAX</span><span class="ptag">Salesforce</span><span class="ptag">HubSpot</span></div></div></div>
-    <div class="proj-card"><div class="impact">&#9650; AI-Powered Automation</div><h3>MCP Server + Claude AI Integration</h3><p>Deployed MCP Server integrated with Claude AI (internal pilot) &mdash; automated data quality checks, pipeline monitoring alerts, and report generation triggers across Fabric and Power BI domains.</p><div class="proj-meta"><div class="proj-tags"><span class="ptag">MCP Server</span><span class="ptag">Claude AI</span><span class="ptag">Power BI</span><span class="ptag">Fabric</span></div></div></div>
-    <div class="proj-card"><div class="impact">&#9650; Org-wide Copilot KPIs</div><h3>M365 Copilot Adoption Analytics Platform</h3><p>Built a Copilot analytics platform integrating with JIRA and Microsoft Teams to auto-capture action items and generate epics. Power BI dashboard tracked top users, automation rate, and task-time reduction.</p><div class="proj-meta"><div class="proj-tags"><span class="ptag">M365</span><span class="ptag">Copilot</span><span class="ptag">JIRA</span><span class="ptag">Power BI</span></div></div></div>
-    <div class="proj-card"><div class="impact">&#9650; 80% Less Manual Effort</div><h3>Automated BI Dashboards &mdash; Nicobar Design</h3><p>Developed automated Power BI dashboards adopted by 20+ stakeholders, eliminating 80% of manual reporting. Conducted A/B tests on purchase funnel increasing conversion rate by 22%.</p><div class="proj-meta"><div class="proj-tags"><span class="ptag">Power BI</span><span class="ptag">Python</span><span class="ptag">SQL</span><span class="ptag">A/B Testing</span></div></div></div>
-  </div>
-</section>
-<section id="skills">
-  <div class="sec-header"><div class="tag">Expertise</div><h2>Skills &amp; Technologies</h2><p>My core stack for analytics engineering and BI</p></div>
-  <div class="skills-layout">
-    <div>
-      <div class="skill-group">
-        <h3>Core Proficiency</h3>
-        <div class="skill-bar"><div class="skill-bar-lbl"><span>Power BI &amp; DAX (Advanced)</span><span>95%</span></div><div class="skill-track"><div class="skill-fill" style="width:95%"></div></div></div>
-        <div class="skill-bar"><div class="skill-bar-lbl"><span>Microsoft Fabric</span><span>92%</span></div><div class="skill-track"><div class="skill-fill" style="width:92%"></div></div></div>
-        <div class="skill-bar"><div class="skill-bar-lbl"><span>Advanced SQL</span><span>93%</span></div><div class="skill-track"><div class="skill-fill" style="width:93%"></div></div></div>
-        <div class="skill-bar"><div class="skill-bar-lbl"><span>Semantic Modelling (Star Schema)</span><span>90%</span></div><div class="skill-track"><div class="skill-fill" style="width:90%"></div></div></div>
-        <div class="skill-bar"><div class="skill-bar-lbl"><span>Python (Pandas, NumPy)</span><span>82%</span></div><div class="skill-track"><div class="skill-fill" style="width:82%"></div></div></div>
-        <div class="skill-bar"><div class="skill-bar-lbl"><span>Marketing Analytics (CAC, ROAS, Attribution)</span><span>88%</span></div><div class="skill-track"><div class="skill-fill" style="width:88%"></div></div></div>
-      </div>
+  <div class="charts-2 reveal">
+    <div class="chart-card">
+      <h3>Outcome Ledger — % Improvement Delivered</h3>
+      <div class="sub">One bar per shipped result, across four organisations</div>
+      <div style="position:relative;height:250px"><canvas id="outcomeChart"></canvas></div>
     </div>
-    <div>
-      <div class="skill-group">
-        <h3>Data Platform &amp; CRM</h3>
-        <div class="tag-cloud">
-          <span class="stag">Microsoft Fabric</span><span class="stag">Fivetran</span><span class="stag">Azure Data Factory</span><span class="stag">SQL Server</span><span class="stag">Salesforce</span><span class="stag">HubSpot</span><span class="stag">Zuora</span><span class="stag">Google Analytics 4</span><span class="stag">Adobe Analytics</span>
-        </div>
-      </div>
-      <br>
-      <div class="skill-group">
-        <h3>AI &amp; Automation</h3>
-        <div class="tag-cloud">
-          <span class="stag">MCP Server</span><span class="stag">Claude AI</span><span class="stag">M365 Copilot</span><span class="stag">FabricIQ</span><span class="stag">JIRA Automation</span><span class="stag">Agentic Workflows</span><span class="stag">Tabular Editor</span><span class="stag">Tableau</span>
-        </div>
-      </div>
+    <div class="chart-card">
+      <h3>Funnel Analytics I Build — MQL &rarr; Close</h3>
+      <div class="sub">Illustrative stage conversion from GTM funnel work</div>
+      <div style="position:relative;height:250px"><canvas id="funnelChart"></canvas></div>
     </div>
   </div>
 </section>
+
+<section id="work">
+  <div class="sec-header reveal">
+    <div class="tag">Signature Work</div>
+    <h2>Three Platforms That Define How I Work</h2>
+  </div>
+  <div class="work-grid reveal">
+    <div class="work-card">
+      <span class="impact">&#9650; 60% faster delivery</span>
+      <h3>Fabric Lakehouse Platform &amp; Direct Lake Semantic Models</h3>
+      <p>OneLake Medallion architecture consolidating Salesforce, HubSpot, Zuora &amp; SQL Server into one certified dataset — 316+ measure DAX library, RLS, Git-integrated CI/CD.</p>
+      <div class="work-tags"><span class="ptag">Fabric</span><span class="ptag">Direct Lake</span><span class="ptag">DAX</span><span class="ptag">PySpark</span></div>
+    </div>
+    <div class="work-card">
+      <span class="impact">&#9650; AI-augmented pipeline ops</span>
+      <h3>Claude AI + MCP Server Integration with Fabric</h3>
+      <p>Piloted agentic AI in analytics: AI-assisted SQL transformation drafting, pipeline generation, and automated anomaly reporting — plus capacity &amp; query-cost optimisation.</p>
+      <div class="work-tags"><span class="ptag">MCP Server</span><span class="ptag">Claude AI</span><span class="ptag">Azure AI Foundry</span></div>
+    </div>
+    <div class="work-card">
+      <span class="impact">&#9650; Steers marketing spend</span>
+      <h3>GTM Funnel, CAC &amp; Multi-Touch Attribution Analytics</h3>
+      <p>MQL &rarr; SQL &rarr; SAO &rarr; Close funnel with velocity and cohort views; CAC, ROAS and attribution dashboards that directly inform campaign budget allocation.</p>
+      <div class="work-tags"><span class="ptag">Power BI</span><span class="ptag">Salesforce</span><span class="ptag">HubSpot</span></div>
+    </div>
+  </div>
+</section>
+
 <section id="experience">
-  <div class="sec-header"><div class="tag">Career</div><h2>Professional Experience</h2><p>5+ years across analytics engineering, BI, and data management</p></div>
-  <div class="exp-list">
-    <div class="exp-item"><div class="exp-date">Nov 2025 &ndash; Present</div><div class="exp-body"><h3>Analytics Engineer</h3><div class="company">Metadata Development &amp; Services (India) LLP &mdash; M-Files</div><ul><li>Architected domain-centric star-schema semantic model in Microsoft Fabric &mdash; cut dashboard build time by ~60%.</li><li>Built end-to-end medallion pipelines (Bronze&rarr;Silver&rarr;Gold) ingesting Salesforce, HubSpot, Zuora via Fivetran.</li><li>Designed MQL&rarr;S1/SQL&rarr;SAO&rarr;Close funnel analytics; surfaced CAC, ROAS, and multi-touch attribution in Power BI.</li><li>Deployed MCP Server + Claude AI pilot for automated data quality checks and report generation triggers.</li><li>Built M365 Copilot adoption analytics platform with JIRA &amp; Teams integration, tracked org-wide productivity KPIs.</li></ul></div></div>
-    <div class="exp-item"><div class="exp-date">Mar 2025 &ndash; Nov 2025</div><div class="exp-body"><h3>Analytics Manager</h3><div class="company">Physics Wallah</div><ul><li>Built and scaled analytics frameworks delivering real-time Power BI dashboards &mdash; reduced reporting turnaround by 70%.</li><li>Improved search optimisation pipelines, increasing user engagement by 20% and cutting stockouts by 25%.</li><li>Embedded analytics into GTM strategy, directly improving marketing ROI by 18%.</li></ul></div></div>
-    <div class="exp-item"><div class="exp-date">Apr 2024 &ndash; Mar 2025</div><div class="exp-body"><h3>Manager &ndash; Data Analytics</h3><div class="company">Nicobar Design Pvt. Ltd</div><ul><li>Designed scalable analytics pipelines using Python and SQL APIs for real-time e-commerce transaction data.</li><li>Developed automated Power BI dashboards adopted by 20+ stakeholders, eliminating 80% of manual reporting.</li><li>Conducted cohort analysis and A/B tests on purchase funnel &mdash; increased conversion rate by 22%.</li></ul></div></div>
-    <div class="exp-item"><div class="exp-date">May 2023 &ndash; Apr 2024</div><div class="exp-body"><h3>Analytics Consultant</h3><div class="company">Upwork (Remote)</div><ul><li>Delivered multi-touch attribution, retention, and ARPU dashboards (Power BI, Tableau, Adobe Analytics) for global SaaS and e-commerce clients &mdash; reduced reporting cycles by 40%.</li><li>Strengthened ETL pipelines and data governance across 5+ client engagements in marketing analytics.</li></ul></div></div>
-    <div class="exp-item"><div class="exp-date">Mar 2023 &ndash; May 2023</div><div class="exp-body"><h3>Senior Business Analyst</h3><div class="company">Ferns N Petals</div><ul><li>Built executive KPI dashboards improving stakeholder visibility by 30%; GA4 and Adobe Analytics funnel analysis drove 20% higher digital conversions.</li><li>Led data-backed service optimisation reducing delivery gaps by 10% and improving NPS by 12%.</li></ul></div></div>
-    <div class="exp-item"><div class="exp-date">Mar 2021 &ndash; Mar 2023</div><div class="exp-body"><h3>Power BI Developer</h3><div class="company">Oxania Healthcare Pvt. Ltd</div><ul><li>Engineered 10+ BI dashboards from 100K+ healthcare records, automating SQL&ndash;Power BI pipelines and cutting claims turnaround by 20%.</li><li>Transformed operational data into analytical models, improving decision speed and outreach growth by 18%.</li></ul></div></div>
-    <div class="exp-item"><div class="exp-date">Aug 2019 &ndash; Mar 2021</div><div class="exp-body"><h3>Data Analyst</h3><div class="company">SEO To Web Design</div><ul><li>Built Power BI dashboards monitoring hospital ED performance, reducing patient wait times by 20%.</li><li>Automated data pipelines using SQL and Python (Pandas) for data cleaning, validation, and normalization at scale.</li></ul></div></div>
+  <div class="sec-header reveal">
+    <div class="tag">Career</div>
+    <h2>Professional Experience</h2>
+    <p>6+ years &middot; four organisations &middot; every bullet ends in a number.</p>
   </div>
-  <div style="margin-top:2rem;padding:1.25rem 1.5rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
-    <div><div style="font-weight:600;font-size:0.95rem;">B.Tech &mdash; Computer Science Engineering</div><div style="color:var(--muted);font-size:0.85rem;">Noida International University &bull; 2018</div></div>
-    <div class="tag" style="margin:0">Education</div>
-  </div>
-</section>
-<section id="contact">
-  <div class="sec-header"><div class="tag">Contact</div><h2>Let's Connect</h2><p>Open to Analytics Engineer, BI Lead, and Revenue Analytics roles</p></div>
-  <div class="contact-layout">
-    <div class="contact-info">
-      <p>Whether you have a role in mind, want to discuss analytics architecture, or just want to connect &mdash; I'd love to hear from you.</p>
-      <div class="contact-links">
-        <a href="mailto:rowhit.singh99@gmail.com" class="clink"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>rowhit.singh99@gmail.com</a>
-        <a href="tel:+919211344608" class="clink"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.1 19.79 19.79 0 0 1 1.62 4.5 2 2 0 0 1 3.59 2.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"/></svg>+91-9211344608</a>
-        <a href="https://www.linkedin.com/in/rohitsingh-dea" target="_blank" class="clink"><svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>linkedin.com/in/rohitsingh-dea</a>
-        <a href="https://github.com/RohitSingh-DEA" target="_blank" class="clink"><svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>github.com/RohitSingh-DEA</a>
-      </div>
+  <div class="timeline reveal">
+    <div class="tl-item">
+      <div class="tl-head"><h3>Analytics Engineer</h3><span class="tl-date">2025 &ndash; Present</span></div>
+      <div class="tl-company">Metadata Development &amp; Services (India) LLP &mdash; M-Files</div>
+      <ul>
+        <li><b>Fabric Lakehouse/Warehouse platform</b> on OneLake (Delta, Medallion) consolidated multi-source reporting into one certified dataset — <span class="metric">dashboard build time cut ~60%</span>.</li>
+        <li><b>Direct Lake semantic models</b> with a <span class="metric">316+ measure DAX library</span>, RLS and certified datasets powering a centralised KPI Hub for sales forecasting.</li>
+        <li><b>Claude AI + MCP Server pilot</b> — AI-assisted SQL drafting, pipeline generation, automated anomaly reporting, and Fabric capacity/cost optimisation.</li>
+      </ul>
     </div>
-    <form class="contact-form" onsubmit="return false;">
-      <input type="text" placeholder="Your Name" />
-      <input type="email" placeholder="Your Email" />
-      <textarea rows="4" placeholder="Your Message"></textarea>
-      <button type="submit" class="btn btn-primary">Send Message</button>
-    </form>
+    <div class="tl-item">
+      <div class="tl-head"><h3>Manager &ndash; Data Analytics</h3><span class="tl-date">2024 &ndash; 2025</span></div>
+      <div class="tl-company">Nicobar Design Pvt. Ltd</div>
+      <ul>
+        <li>Automated Power BI suite adopted by 20+ stakeholders — <span class="metric">eliminated 80% of manual reporting</span>.</li>
+        <li>Purchase-funnel A/B testing lifted <span class="metric">conversion +22%</span>; returns analytics cut <span class="metric">return rate ~12%</span> and raised units-per-transaction ~15%.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-head"><h3>Analytics Consultant</h3><span class="tl-date">2023 &ndash; 2024</span></div>
+      <div class="tl-company">Upwork &mdash; Remote, Global Clients</div>
+      <ul>
+        <li>Attribution, churn &amp; ARPU dashboards for SaaS, retail and media clients — <span class="metric">reporting cycles down 40%</span> across 5+ engagements.</li>
+        <li>Churn early-warning segmentation fed win-back campaigns — <span class="metric">monthly logo churn cut ~10%</span>.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-head"><h3>Power BI Developer</h3><span class="tl-date">2019 &ndash; 2023</span></div>
+      <div class="tl-company">Oxania Healthcare Pvt. Ltd</div>
+      <ul>
+        <li>10+ BI dashboards over claims &amp; hospital ED operations; automated SQL/Python ETL — <span class="metric">claims turnaround &minus;20%, patient wait times &minus;20%</span>.</li>
+        <li>Claims-denial analytics pinpointed top rejection drivers — <span class="metric">denial/resubmission rates down ~15%</span>.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="edu-grid reveal">
+    <div class="edu-card"><div class="t">PG Programme &mdash; AI &amp; Machine Learning</div><div class="s">Great Lakes Institute of Management</div><span class="badge-cert cert-prog">Pursuing</span></div>
+    <div class="edu-card"><div class="t">DP-600 &mdash; Fabric Analytics Engineer Associate</div><div class="s">Microsoft</div><span class="badge-cert cert-prog">Exam Scheduled</span></div>
+    <div class="edu-card"><div class="t">AI Fluency &amp; Claude Certification</div><div class="s">Anthropic</div><span class="badge-cert cert-done">Certified</span></div>
+    <div class="edu-card"><div class="t">B.Tech &mdash; Computer Science Engineering</div><div class="s">Noida International University &bull; 2018</div><span class="badge-cert cert-done">Completed</span></div>
   </div>
 </section>
-<footer><p>&copy; 2025 Rohit Singh &bull; Analytics Engineer &bull; Bengaluru, India</p></footer>
+
+<section id="skills">
+  <div class="sec-header reveal">
+    <div class="tag">Stack</div>
+    <h2>Skills &amp; Technologies</h2>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-card">
+      <h3>Microsoft Fabric &amp; Power BI</h3>
+      <div class="tag-cloud"><span class="stag">Lakehouse / Warehouse</span><span class="stag">OneLake</span><span class="stag">Direct Lake</span><span class="stag">Dataflows Gen2</span><span class="stag">Advanced DAX</span><span class="stag">Star Schema</span><span class="stag">RLS</span><span class="stag">Tabular Editor</span><span class="stag">Deployment Pipelines</span></div>
+    </div>
+    <div class="skill-card">
+      <h3>Data Engineering</h3>
+      <div class="tag-cloud"><span class="stag">Medallion (Bronze&rarr;Gold)</span><span class="stag">Delta Lake / Parquet</span><span class="stag">PySpark</span><span class="stag">ADF</span><span class="stag">Fivetran</span><span class="stag">SCD Type 2</span><span class="stag">SQL Server</span><span class="stag">Advanced SQL</span></div>
+    </div>
+    <div class="skill-card">
+      <h3>AI &amp; Automation</h3>
+      <div class="tag-cloud"><span class="stag">MCP Server</span><span class="stag">Claude AI / Claude Code</span><span class="stag">Azure AI Foundry</span><span class="stag">M365 Copilot</span><span class="stag">Agentic Workflows</span><span class="stag">Anomaly Detection</span></div>
+    </div>
+    <div class="skill-card">
+      <h3>CRM &amp; Marketing Analytics</h3>
+      <div class="tag-cloud"><span class="stag">Salesforce</span><span class="stag">HubSpot</span><span class="stag">Zuora</span><span class="stag">GA4</span><span class="stag">Adobe Analytics</span><span class="stag">Multi-Touch Attribution</span><span class="stag">CAC / ROAS</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="sec-header reveal">
+    <div class="tag">Contact</div>
+    <h2>Let's Connect</h2>
+    <p>Open to Analytics Engineer, Senior Power BI, and Revenue Analytics roles.</p>
+  </div>
+  <div class="contact-layout reveal">
+    <a href="mailto:rowhit.singh99@gmail.com" class="clink"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>rowhit.singh99@gmail.com</a>
+    <a href="tel:+919211344608" class="clink"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.1 19.79 19.79 0 0 1 1.62 4.5 2 2 0 0 1 3.59 2.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"/></svg>+91-9211344608</a>
+    <a href="https://www.linkedin.com/in/rohitsingh-dea" target="_blank" rel="noopener" class="clink"><svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>linkedin.com/in/rohitsingh-dea</a>
+    <a href="https://github.com/RohitSingh-DEA" target="_blank" rel="noopener" class="clink"><svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>github.com/RohitSingh-DEA</a>
+  </div>
+</section>
+
+<footer><p>&copy; 2026 Rohit Singh &bull; Analytics Engineer &bull; Bengaluru, India</p></footer>
+
 <script>
-  Chart.defaults.color = '#94a3b8';
-  Chart.defaults.borderColor = '#334155';
+  // Scroll reveal + count-up animations
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  function countUp(el) {
+    const to = parseInt(el.dataset.to, 10);
+    if (reduceMotion) { el.textContent = to; return; }
+    const dur = 1400, start = performance.now();
+    function tick(now) {
+      const p = Math.min((now - start) / dur, 1);
+      el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  const countObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { countUp(e.target); countObs.unobserve(e.target); } });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.count').forEach(el => countObs.observe(el));
+
+  // Charts
+  Chart.defaults.color = '#8fa3bd';
+  Chart.defaults.borderColor = 'rgba(148,163,184,0.12)';
   Chart.defaults.font.family = 'Inter, sans-serif';
   Chart.defaults.font.size = 11;
-  new Chart(document.getElementById('funnelChart'), { type:'line', data:{ labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], datasets:[ {label:'MQL',data:[420,480,510,560,590,640,680,710,740,790,830,880],borderColor:'#38bdf8',backgroundColor:'rgba(56,189,248,0.06)',fill:true,tension:0.4,pointRadius:3}, {label:'SAO',data:[180,210,225,250,268,295,315,330,345,368,385,410],borderColor:'#a855f7',backgroundColor:'transparent',tension:0.4,pointRadius:3}, {label:'Close',data:[65,78,84,95,102,114,121,128,134,143,150,160],borderColor:'#22c55e',backgroundColor:'transparent',tension:0.4,pointRadius:3} ] }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:12,boxWidth:12}}},scales:{x:{grid:{color:'#1e293b'}},y:{grid:{color:'#1e293b'},beginAtZero:true}}} });
-  new Chart(document.getElementById('channelChart'), { type:'doughnut', data:{ labels:['Paid Search','Organic','Email','Direct','Social'], datasets:[{data:[32,24,18,15,11],backgroundColor:['#2563eb','#38bdf8','#22c55e','#f97316','#a855f7'],borderWidth:0,hoverOffset:6}] }, options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{position:'bottom',labels:{padding:10,boxWidth:10}}}} });
-  new Chart(document.getElementById('radarChart'), { type:'radar', data:{ labels:['Power BI','DAX','Fabric','SQL','Python','Attribution'], datasets:[{label:'Proficiency',data:[95,92,90,93,82,88],borderColor:'#38bdf8',backgroundColor:'rgba(56,189,248,0.12)',pointBackgroundColor:'#38bdf8',pointRadius:3}] }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{r:{beginAtZero:true,max:100,grid:{color:'#334155'},ticks:{stepSize:25,display:false},pointLabels:{font:{size:10}}}}} });
-  new Chart(document.getElementById('roiChart'), { type:'bar', data:{ labels:['Paid Search','Email','Social','Organic','Events'], datasets:[{label:'ROI %',data:[312,248,175,420,138],backgroundColor:['#2563eb','#38bdf8','#a855f7','#22c55e','#f97316'],borderRadius:6,borderWidth:0}] }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{grid:{color:'#1e293b'},beginAtZero:true,ticks:{callback:v=>v+'%'}}}} });
-  new Chart(document.getElementById('retentionChart'), { type:'line', data:{ labels:['Wk 1','Wk 2','Wk 3','Wk 4','Wk 5','Wk 6'], datasets:[ {label:'Post-optimisation',data:[100,74,61,52,48,45],borderColor:'#22c55e',backgroundColor:'transparent',tension:0.3,pointRadius:3}, {label:'Baseline',data:[100,65,50,42,37,34],borderColor:'#94a3b8',backgroundColor:'transparent',tension:0.3,pointRadius:3,borderDash:[4,4]} ] }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:10,boxWidth:12}}},scales:{x:{grid:{color:'#1e293b'}},y:{grid:{color:'#1e293b'},beginAtZero:true,max:100,ticks:{callback:v=>v+'%'}}}} });
+
+  new Chart(document.getElementById('outcomeChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Manual reporting', 'Dashboard delivery', 'Reporting cycles', 'Conversion lift', 'Claims turnaround', 'Denial rate'],
+      datasets: [{
+        data: [80, 60, 40, 22, 20, 15],
+        backgroundColor: ['#34d399', '#38bdf8', '#fb923c', '#a78bfa', '#3b82f6', '#f472b6'],
+        borderRadius: 7, borderWidth: 0, barThickness: 18
+      }]
+    },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => c.parsed.x + '% measured improvement' } }
+      },
+      scales: {
+        x: { grid: { color: 'rgba(148,163,184,0.08)' }, beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+
+  new Chart(document.getElementById('funnelChart'), {
+    type: 'bar',
+    data: {
+      labels: ['MQL', 'SQL', 'SAO', 'Close'],
+      datasets: [{
+        data: [100, 46, 28, 18],
+        backgroundColor: ['#38bdf8', '#818cf8', '#a78bfa', '#34d399'],
+        borderRadius: 7, borderWidth: 0, barThickness: 34
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => c.parsed.y + '% of MQL volume' } }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: 'rgba(148,163,184,0.08)' }, beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } }
+      }
+    }
+  });
 </script>
 </body>
 </html>
